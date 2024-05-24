@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+server:
+  port: 8081
