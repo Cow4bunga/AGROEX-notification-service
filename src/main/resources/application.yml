@@ -15,3 +15,6 @@ spring:
           auth: true
 server:
   port: 8081
+aws:
+  sqs:
+    endpoint: ${SQS_ENDPOINT}

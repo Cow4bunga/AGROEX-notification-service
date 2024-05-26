@@ -15,6 +15,7 @@
 	<description>agroexp-notification-service</description>
 	<properties>
 		<java.version>21</java.version>
+		<awsspring.cloud.version>3.2.0-M1</awsspring.cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -29,7 +30,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -39,6 +39,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter</artifactId>
+			<version>${awsspring.cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter-sqs</artifactId>
+			<version>${awsspring.cloud.version}</version>
 		</dependency>
 	</dependencies>
 
