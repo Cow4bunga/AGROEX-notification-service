@@ -13,8 +13,14 @@ spring:
             enable: true
             required: true
           auth: true
+  cloud:
+    aws:
+      sqs:
+        region: us-east-1
+        endpoint: ${SQS_ENDPOINT}
 server:
   port: 8081
 aws:
   sqs:
+    region: us-east-1
     endpoint: ${SQS_ENDPOINT}
