@@ -4,7 +4,6 @@ import com.ventionteams.agroexp_notification_service.config.properties.SQSProper
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
@@ -12,10 +11,7 @@ import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 public class SQSConfig {
   @Bean
   SqsAsyncClient sqsAsyncClient(SQSProperties sqsProperties) {
-    return SqsAsyncClient.builder()
-        .region(Region.of(sqsProperties.getRegion()))
-        .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-        .build();
+    return SqsAsyncClient.builder().region(Region.of(sqsProperties.getRegion())).build();
   }
 
   @Bean
