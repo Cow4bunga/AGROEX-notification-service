@@ -1,33 +1,32 @@
 package com.ventionteams.agroexp_notification_service.service.messaging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
 import com.ventionteams.agroexp_notification_service.service.EmailService;
-import io.awspring.cloud.sqs.annotation.SqsListener;
-import io.awspring.cloud.sqs.listener.acknowledgement.Acknowledgement;
-import io.awspring.cloud.sqs.operations.SqsTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy;
+import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.messaging.handler.annotation.Headers;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class MessageReceiver {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MessageReceiver.class);
-  @Autowired private SqsTemplate sqsTemplate;
-  @Autowired private EmailService emailService;
+  private static final ObjectMapper OBJECT_MAPPER = Jackson2ObjectMapperBuilder.json().build();
+  private final EmailService emailService;
 
-  @SqsListener("Agroex-notification-queue")
-  public void listen(Message<?> message) {
-    LOGGER.info("Message received on listen method at {}", OffsetDateTime.now());
-    emailService.send(message);
-    Acknowledgement.acknowledge(message);
-  }
-
-  // this method should be called in an infinite loop
-  public void receive() {
-    sqsTemplate.receive(from -> from.queue("Agroex-notification-queue"));
+  @SqsListener(
+      value = "Agroex-notification-queue",
+      deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
+  public void listen(
+      @Payload NotificationPayload notificationPayload, @Headers Map<String, Object> headers) {
+    System.out.println(notificationPayload);
+      emailService.send(notificationPayload);
   }
 }

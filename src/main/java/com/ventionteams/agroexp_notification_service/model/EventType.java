@@ -7,6 +7,7 @@ public enum EventType {
     LOT_REJECTION("Lot rejection"),
     LOT_ACCEPTANCE("Lot accepted"),
     LOT_PURCHASED("Lot purchase"),
+    LOT_EXPIRED("Lot expiration"),
     BET_OUTBID("Bet outbid");
 
     private static final Map<String, EventType> cachedEntries = new HashMap<>();
