@@ -1,8 +1,11 @@
 package com.ventionteams.agroexp_notification_service.model;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum EventType {
     LOT_REJECTION("Lot rejection"),
     LOT_ACCEPTANCE("Lot accepted"),

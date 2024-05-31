@@ -1,9 +1,6 @@
 package com.ventionteams.agroexp_notification_service.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
-import com.ventionteams.agroexp_notification_service.service.messaging.MessageReceiver;
-import com.ventionteams.agroexp_notification_service.util.ImageConversionUtil;
 import com.ventionteams.agroexp_notification_service.util.MessageFormingUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -13,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 @Slf4j
@@ -41,7 +36,7 @@ public class EmailService {
       var helper = new MimeMessageHelper(message, true, ENCODING);
       helper.setFrom(username);
       helper.setTo(notificationPayload.getEmail());
-      helper.setSubject(String.valueOf(notificationPayload.getEvent()));
+      helper.setSubject(String.valueOf(notificationPayload.getEvent().getEventName()));
       helper.setText(html, true);
     } catch (MessagingException e) {
       throw new MailSendException(
@@ -54,6 +49,7 @@ public class EmailService {
     log.info(
         String.format(
             "Mail has been sent to %s, subject: %s",
-            notificationPayload.getEmail(), String.valueOf(notificationPayload.getEvent())));
+            notificationPayload.getEmail(),
+            String.valueOf(notificationPayload.getEvent().getEventName())));
   }
 }
