@@ -5,11 +5,12 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.FluxSink;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
 @RedisHash("subscriptions")
-public final class SSESubscription {
+public final class SSESubscription implements Serializable {
   private final UUID userId;
   private final FluxSink<ServerSentEvent> fluxSink;
 }
