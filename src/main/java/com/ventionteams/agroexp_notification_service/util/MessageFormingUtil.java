@@ -17,13 +17,29 @@ public final class MessageFormingUtil {
     context.setVariable("logoLink", logoLink);
     context.setVariable("subject", event.getEventName());
 
-    switch (event){
-      case LOT_ACCEPTANCE -> context.setVariable("text",String.format("Your lot '%s' has been accepted!",notificationPayload.getLotTitle()));
-      case LOT_REJECTION -> context.setVariable("text",String.format("Your lot '%s' has been rejected!",notificationPayload.getLotTitle()));
-      case LOT_PURCHASED -> context.setVariable("text",String.format("Lot '%s' has been purchased!",notificationPayload.getLotTitle()));
-      case BET_OUTBID -> context.setVariable("text",String.format("Your bet on lot '%s' has been outbid!",notificationPayload.getLotTitle()));
-      case LOT_EXPIRED -> context.setVariable("text",String.format("Your lot '%s' has expired!",notificationPayload.getLotTitle()));
-      case null, default -> throw new MailSendException(String.format("Could nor send notification on lot '%s'!", notificationPayload.getLotTitle()));
+    switch (event) {
+      case LOT_ACCEPTANCE ->
+          context.setVariable(
+              "text",
+              String.format("Your lot '%s' has been accepted!", notificationPayload.getLotTitle()));
+      case LOT_REJECTION ->
+          context.setVariable(
+              "text",
+              String.format("Your lot '%s' has been rejected!", notificationPayload.getLotTitle()));
+      case LOT_PURCHASED ->
+          context.setVariable(
+              "text",
+              String.format("Lot '%s' has been purchased!", notificationPayload.getLotTitle()));
+      case BET_OUTBID ->
+          context.setVariable(
+              "text",
+              String.format(
+                  "Your bet on lot '%s' has been outbid!", notificationPayload.getLotTitle()));
+      case LOT_EXPIRED ->
+          context.setVariable(
+              "text",
+              String.format("Your lot '%s' has expired!", notificationPayload.getLotTitle()));
+      case null, default -> throw new MailSendException(String.format("Could not send notification on lot '%s'!", notificationPayload.getLotTitle()));
     }
 
     return context;

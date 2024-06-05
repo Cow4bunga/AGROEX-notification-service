@@ -49,7 +49,6 @@ public class EmailService {
     log.info(
         String.format(
             "Mail has been sent to %s, subject: %s",
-            notificationPayload.getEmail(),
-            String.valueOf(notificationPayload.getEvent().getEventName())));
+            notificationPayload.getEmail(), notificationPayload.getEvent().getEventName()));
   }
 }

@@ -1,6 +1,5 @@
 package com.ventionteams.agroexp_notification_service.config.properties;
 
-import io.awspring.cloud.sqs.operations.SqsTemplate;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

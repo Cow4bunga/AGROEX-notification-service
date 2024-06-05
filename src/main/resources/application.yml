@@ -18,5 +18,8 @@ spring:
       sqs:
         region: us-east-1
         endpoint: ${SQS_ENDPOINT}
+  redis:
+    host: localhost
+    port: 6379
 server:
   port: 8081

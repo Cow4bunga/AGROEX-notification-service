@@ -10,8 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationPayload {
-    private UUID userID;
-    private String lotTitle;
-    private String email;
-    private EventType event;
+  private UUID userID;
+  private String lotTitle;
+  private String email;
+  private EventType event;
 }

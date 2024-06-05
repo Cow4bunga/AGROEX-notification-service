@@ -19,25 +19,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sse")
 public class SSEService {
 
-    private final ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-    private final SSEController sseController;
+  private final SSEController sseController;
 
-    public void send(NotificationPayload notificationPayload) {
-        var subscriptions = sseController.getSubscriptions();
+  public void send(NotificationPayload notificationPayload) {
+    var subscriptions = sseController.getSubscriptions();
 
-        subscriptions.values().forEach((subscription -> {
-            ServerSentEvent<String> event;
-            try {
-                event = ServerSentEvent
-                        .builder(objectMapper.writeValueAsString(notificationPayload))
+    subscriptions
+        .values()
+        .forEach(
+            (subscription -> {
+              ServerSentEvent<String> event;
+              try {
+                event =
+                    ServerSentEvent.builder(objectMapper.writeValueAsString(notificationPayload))
                         .build();
-            } catch (JsonProcessingException e) {
+              } catch (JsonProcessingException e) {
                 throw new JsonIOException("Error while bet sending");
-            }
-            if (subscription.getUserId().equals(notificationPayload.getUserID())) {
+              }
+              if (subscription.getUserId().equals(notificationPayload.getUserID())) {
                 subscription.getFluxSink().next(event);
-            }
-        }));
-    }
+              }
+            }));
+  }
 }

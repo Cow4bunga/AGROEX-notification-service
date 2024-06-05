@@ -12,13 +12,13 @@ import org.springframework.util.StreamUtils;
 @Service
 public final class ImageConversionUtil {
 
-    public static String convertImageToBase64(String imagePath) {
-        try {
-            var resource = new ClassPathResource(imagePath);
-            var imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
-            return java.util.Base64.getEncoder().encodeToString(imageBytes);
-        } catch (IOException e) {
-            throw new ImageConversionException("Error while image conversion", e);
-        }
+  public static String convertImageToBase64(String imagePath) {
+    try {
+      var resource = new ClassPathResource(imagePath);
+      var imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+      return java.util.Base64.getEncoder().encodeToString(imageBytes);
+    } catch (IOException e) {
+      throw new ImageConversionException("Error while image conversion", e);
     }
+  }
 }
