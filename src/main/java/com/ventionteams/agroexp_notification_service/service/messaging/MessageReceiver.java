@@ -29,4 +29,9 @@ public class MessageReceiver {
     // TODO: remove next line when done with Redis
     emailService.send(notificationPayload);
   }
+
+  @SqsListener(value = "Agroex-SSE-notification-queue")
+  public void acceptBroadcast(String message){
+    // TODO: add logic
+  }
 }

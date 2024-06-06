@@ -1,4 +1,11 @@
 spring:
+  redis:
+    host: localhost
+    port: 6379
+  data:
+    redis:
+      repositories:
+        enabled: true
   config:
     import: optional:file:.env[.properties]
   mail:
@@ -17,9 +24,5 @@ spring:
     aws:
       sqs:
         region: us-east-1
-        endpoint: ${SQS_ENDPOINT}
-  redis:
-    host: localhost
-    port: 6379
 server:
   port: 8081
