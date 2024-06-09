@@ -18,20 +18,21 @@ import java.util.Map;
 public class MessageReceiver {
 
   private final EmailService emailService;
+  private final SnsService snsService;
   private final NotificationTypeResolverService notificationTypeResolverService;
 
   @SqsListener(value = "Agroex-notification-queue")
   public void listen(
       @Payload NotificationPayload notificationPayload, @Headers Map<String, Object> headers) {
-    log.debug(String.valueOf(notificationPayload));
     log.info(String.valueOf(notificationPayload));
     notificationTypeResolverService.processNotification(notificationPayload);
+
     // TODO: remove next line when done with Redis
     emailService.send(notificationPayload);
   }
 
   @SqsListener(value = "Agroex-SSE-notification-queue")
-  public void acceptBroadcast(String message){
+  public void acceptBroadcast(@Payload NotificationPayload notificationPayload, Map<String,Object> headers){
     // TODO: add logic
   }
 }

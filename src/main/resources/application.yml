@@ -22,7 +22,11 @@ spring:
           auth: true
   cloud:
     aws:
+      sns:
+        region: ${AWS_REGION}
       sqs:
-        region: us-east-1
+        name: ${SNS_TOPIC_NAME}
+        arn: ${SNS_TOPIC_ARN}
+        region: ${AWS_REGION}
 server:
   port: 8081
