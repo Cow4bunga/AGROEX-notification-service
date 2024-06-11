@@ -25,7 +25,7 @@ public class SNSConfig {
       AmazonSNSAsync amazonSNSAsync, CustomMessageConverter customMessageConverter) {
     NotificationMessagingTemplate notificationMessagingTemplate =
         new NotificationMessagingTemplate(amazonSNSAsync);
-    notificationMessagingTemplate.setMessageConverter(customMessageConverter);
-    return notificationMessagingTemplate;
+    //    notificationMessagingTemplate.setMessageConverter(customMessageConverter);
+    return new NotificationMessagingTemplate(amazonSNSAsync);
   }
 }

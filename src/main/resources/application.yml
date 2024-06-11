@@ -1,9 +1,10 @@
 spring:
   redis:
-    host: localhost
-    port: 6379
+    topic: ${TOPIC_NAME}
   data:
     redis:
+      host: localhost
+      port: 6379
       repositories:
         enabled: true
   config:
@@ -25,7 +26,7 @@ spring:
       sns:
         region: ${AWS_REGION}
       sqs:
-        name: ${SNS_TOPIC_NAME}
+        name: ${TOPIC_NAME}
         arn: ${SNS_TOPIC_ARN}
         region: ${AWS_REGION}
 server:
