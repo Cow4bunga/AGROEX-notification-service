@@ -1,7 +1,11 @@
 package com.ventionteams.agroexp_notification_service.service.messaging.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ventionteams.agroexp_notification_service.model.Connection;
 import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
+import com.ventionteams.agroexp_notification_service.repository.ConnectionRepository;
+import com.ventionteams.agroexp_notification_service.service.ConnectionService;
+import com.ventionteams.agroexp_notification_service.service.NotificationTypeResolverService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -17,7 +21,8 @@ import java.io.IOException;
 public class MessageSubscriber implements MessageListener {
 
   private final ObjectMapper objectMapper;
-  private final RedisTemplate<String, Object> redisTemplate;
+  private final ConnectionService connectionService;
+  private final NotificationTypeResolverService typeResolverService;
 
   @Override
   public void onMessage(Message message, byte[] pattern) {
@@ -25,8 +30,9 @@ public class MessageSubscriber implements MessageListener {
       log.info("New message received: {}", message);
       NotificationPayload payload =
           objectMapper.readValue(message.getBody(), NotificationPayload.class);
+      typeResolverService.processNotification(payload);
     } catch (IOException e) {
-      log.error("error while parsing message");
+      log.error("Unable to process message!");
     }
   }
 }

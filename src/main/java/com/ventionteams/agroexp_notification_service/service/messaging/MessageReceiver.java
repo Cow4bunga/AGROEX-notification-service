@@ -20,15 +20,12 @@ import java.util.Map;
 public class MessageReceiver {
 
   private final EmailService emailService;
-  private final SnsService snsService;
   private final NotificationTypeResolverService notificationTypeResolverService;
-  private static final String TOPIC = "Agroex-notification-topic";
 
   @SqsListener(value = "Agroex-notification-queue")
   public void listen(
       @Payload NotificationPayload notificationPayload, @Headers Map<String, Object> headers) {
     log.info(String.valueOf(notificationPayload));
-    //    notificationTypeResolverService.processNotification(notificationPayload);
-    emailService.send(notificationPayload);
+    notificationTypeResolverService.processNotification(notificationPayload);
   }
 }

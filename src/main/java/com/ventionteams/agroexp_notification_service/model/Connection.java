@@ -13,4 +13,5 @@ public class Connection {
   @Id private UUID id;
 
   @Indexed private UUID userId;
+  @Indexed private UUID instanceId;
 }
