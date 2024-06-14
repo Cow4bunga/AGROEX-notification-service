@@ -14,15 +14,15 @@ import java.util.UUID;
 public class ConnectionService {
   private final ConnectionRepository connectionRepository;
 
-  public void saveConnection(NotificationPayload notificationPayload) {
-    Connection connection = new Connection();
-    connection.setId(UUID.randomUUID());
-    connection.setUserId(notificationPayload.getUserID());
-    connection.setInstanceId(UUID.fromString("8f248888-ab25-469b-982c-87b36efc2f64"));
+  public void saveConnection(Connection connection) {
     connectionRepository.save(connection);
   }
 
   public Connection getByUserId(UUID userId) {
     return connectionRepository.findByUserId(userId).orElse(null);
+  }
+
+  public void deleteByUserId(UUID userId) {
+    connectionRepository.deleteByUserId(userId);
   }
 }

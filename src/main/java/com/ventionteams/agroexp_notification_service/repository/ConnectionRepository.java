@@ -10,6 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ConnectionRepository extends CrudRepository<Connection, UUID> {
   Optional<Connection> findByUserId(UUID userId);
-
-  boolean existsByUserId(UUID userId);
+  void deleteByUserId(UUID userId);
 }
