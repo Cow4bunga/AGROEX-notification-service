@@ -22,15 +22,6 @@ public class NotificationTypeResolverService {
     var connection = connectionService.getByUserId(notificationPayload.getUserID());
     if (connection == null) {
       emailService.send(notificationPayload);
-      return;
-    }
-
-    // TODO: here we need to implement instance ID check
-    if (connection
-        .getInstanceId()
-        .equals(UUID.fromString("8f248888-ab25-469b-982c-87b36efc2f64"))) {
-      // sseService.send(notificationPayload);
-      System.out.println("success");
     } else {
       messagePublisher.publish(notificationPayload);
     }
