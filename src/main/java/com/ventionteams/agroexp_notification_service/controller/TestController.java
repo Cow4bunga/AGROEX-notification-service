@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -26,6 +27,6 @@ public class TestController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Connection> getConnectionByUserId(@PathVariable UUID id) {
-    return new ResponseEntity<>(connectionService.getByUserId(id), HttpStatus.OK);
+    return new ResponseEntity<>(connectionService.getByUserId(id).get(), HttpStatus.OK);
   }
 }

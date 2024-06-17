@@ -1,12 +1,11 @@
 package com.ventionteams.agroexp_notification_service.service;
 
-import com.ventionteams.agroexp_notification_service.exception.ConnectionNotFoundException;
 import com.ventionteams.agroexp_notification_service.model.Connection;
-import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
 import com.ventionteams.agroexp_notification_service.repository.ConnectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,15 +13,15 @@ import java.util.UUID;
 public class ConnectionService {
   private final ConnectionRepository connectionRepository;
 
-  public void saveConnection(Connection connection) {
+  public void save(Connection connection) {
     connectionRepository.save(connection);
   }
 
-  public Connection getByUserId(UUID userId) {
-    return connectionRepository.findByUserId(userId).orElse(null);
+  public Optional<Connection> getByUserId(UUID userId) {
+    return connectionRepository.findByUserId(userId);
   }
 
-  public void deleteByUserId(UUID userId) {
-    connectionRepository.deleteByUserId(userId);
+  public void deleteById(UUID userId) {
+    connectionRepository.deleteById(userId);
   }
 }
