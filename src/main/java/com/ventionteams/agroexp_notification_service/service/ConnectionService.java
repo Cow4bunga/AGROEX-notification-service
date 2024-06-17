@@ -13,6 +13,10 @@ import java.util.UUID;
 public class ConnectionService {
   private final ConnectionRepository connectionRepository;
 
+  public Iterable<Connection> getAll() {
+    return connectionRepository.findAll();
+  }
+
   public void save(Connection connection) {
     connectionRepository.save(connection);
   }
@@ -23,5 +27,9 @@ public class ConnectionService {
 
   public void deleteById(UUID userId) {
     connectionRepository.deleteById(userId);
+  }
+
+  public void deleteAll() {
+    connectionRepository.deleteAll();
   }
 }

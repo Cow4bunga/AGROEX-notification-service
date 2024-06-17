@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +29,16 @@ public class TestController {
   @GetMapping("/{id}")
   public ResponseEntity<Connection> getConnectionByUserId(@PathVariable UUID id) {
     return new ResponseEntity<>(connectionService.getByUserId(id).get(), HttpStatus.OK);
+  }
+
+  @GetMapping
+  public ResponseEntity<Iterable<Connection>> getAllConnections() {
+    return new ResponseEntity<>(connectionService.getAll(), HttpStatus.OK);
+  }
+
+  @DeleteMapping
+  public ResponseEntity<Void> deleteAll() {
+    connectionService.deleteAll();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 }

@@ -24,13 +24,11 @@ public class MessageSubscriber implements MessageListener {
   public void onMessage(Message message, byte[] pattern) {
     try {
       log.info("New message received: {}", message);
-      var payload =
-          objectMapper.readValue(message.getBody(), NotificationPayload.class);
+      var payload = objectMapper.readValue(message.getBody(), NotificationPayload.class);
       var userId = payload.getUserID();
       SSEController.getSubscriptions().values().stream()
           .filter(sseSubscription -> sseSubscription.getUserId().equals(userId))
           .forEach(sseSubscription -> sseService.send(payload));
-      log.info(String.format("SSENotification sent to user with id %s", userId));
     } catch (IOException e) {
       log.error("Unable to process message!");
     }

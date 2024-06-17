@@ -24,8 +24,7 @@ import java.util.UUID;
 @RequestMapping("/sse")
 public class SSEController {
 
-  @Getter
-  private static Map<UUID, SSESubscription> subscriptions = new HashMap<>();
+  @Getter private static Map<UUID, SSESubscription> subscriptions = new HashMap<>();
 
   private final ConnectionService connectionService;
 

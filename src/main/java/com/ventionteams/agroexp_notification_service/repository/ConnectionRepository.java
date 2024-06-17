@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ConnectionRepository extends CrudRepository<Connection, UUID> {
   Optional<Connection> findByUserId(UUID userId);
-  void deleteByUserId(UUID userId);
+  void deleteAll();
 }
