@@ -19,7 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MessageReceiver {
 
-  private final EmailService emailService;
   private final NotificationTypeResolverService notificationTypeResolverService;
 
   @SqsListener(value = "Agroex-notification-queue")
