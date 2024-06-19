@@ -33,7 +33,7 @@ public class SSEController {
     var connectionId = UUID.randomUUID();
     return Flux.create(
         fluxSink -> {
-          fluxSink.onDispose(
+          fluxSink.onCancel(
               () -> {
                 subscriptions.remove(connectionId);
                 connectionService.deleteById(connectionId);
