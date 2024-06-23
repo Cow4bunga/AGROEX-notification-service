@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public final class SSESubscription implements Serializable {
+public final class SSESubscription<T> implements Serializable {
   private final UUID userId;
-  private final FluxSink<ServerSentEvent> fluxSink;
+  private final FluxSink<ServerSentEvent<T>> fluxSink;
 }

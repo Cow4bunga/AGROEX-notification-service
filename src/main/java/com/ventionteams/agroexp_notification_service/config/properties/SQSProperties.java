@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Data
-@ConfigurationProperties(prefix = "spring.cloud.aws.sns")
+@ConfigurationProperties(prefix = "spring.cloud.aws.sqs")
 @Component
 public class SQSProperties {
   private String accessKey;

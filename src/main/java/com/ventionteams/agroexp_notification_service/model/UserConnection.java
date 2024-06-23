@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @RedisHash("connections")
 @AllArgsConstructor
-public class Connection {
+public class UserConnection {
   @Id private UUID id;
 
   @Indexed private UUID userId;

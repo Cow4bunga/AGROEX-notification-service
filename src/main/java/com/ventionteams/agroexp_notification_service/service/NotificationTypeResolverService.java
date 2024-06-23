@@ -3,20 +3,17 @@ package com.ventionteams.agroexp_notification_service.service;
 import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
 import com.ventionteams.agroexp_notification_service.service.messaging.redis.MessagePublisher;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationTypeResolverService {
-  private final SSEService sseService;
   private final EmailService emailService;
-  private final ConnectionService connectionService;
+  private final UserConnectionService userConnectionService;
   private final MessagePublisher messagePublisher;
 
   public void processNotification(NotificationPayload notificationPayload) {
-    var connection = connectionService.getByUserId(notificationPayload.getUserID());
+    var connection = userConnectionService.getByUserId(notificationPayload.getUserID());
     if (connection.isEmpty()) {
       emailService.send(notificationPayload);
     } else {

@@ -9,6 +9,11 @@ spring:
         enabled: true
   config:
     import: optional:file:.env[.properties]
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
   mail:
     host: ${MAIL_HOST}
     port: 587
@@ -23,11 +28,14 @@ spring:
           auth: true
   cloud:
     aws:
-      sns:
-        region: ${AWS_REGION}
       sqs:
-        name: ${TOPIC_NAME}
+        name: ${QUEUE_NAME}
         arn: ${SNS_TOPIC_ARN}
         region: ${AWS_REGION}
+      cognito:
+        userPoolId: us-east-1_tRUXbAWUb
+        region: us-east-1
 server:
   port: 8081
+cors:
+  origins: http://localhost:3000, http://localhost:5731

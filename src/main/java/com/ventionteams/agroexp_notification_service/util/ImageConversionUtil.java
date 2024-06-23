@@ -12,9 +12,9 @@ import org.springframework.util.StreamUtils;
 @Service
 public final class ImageConversionUtil {
 
-  public static String convertImageToBase64(String imagePath) {
+  public static String convertImageToBase64(String imageClassPath) {
     try {
-      var resource = new ClassPathResource(imagePath);
+      var resource = new ClassPathResource(imageClassPath);
       var imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
       return java.util.Base64.getEncoder().encodeToString(imageBytes);
     } catch (IOException e) {
