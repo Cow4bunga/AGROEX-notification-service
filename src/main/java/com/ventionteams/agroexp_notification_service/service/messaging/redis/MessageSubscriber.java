@@ -31,7 +31,7 @@ public class MessageSubscriber implements MessageListener {
           .filter(sseSubscription -> sseSubscription.getUserId().equals(userId))
           .forEach(sseSubscription -> sseService.send(payload));
     } catch (IOException e) {
-      log.error(e.getMessage());
+      log.error("Unable to process message", e);
     }
   }
 }
