@@ -19,7 +19,6 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-@RequestMapping("/sse")
 public class SSEService {
 
   @Getter private static Map<UUID, SSESubscription> subscriptions = new HashMap<>();

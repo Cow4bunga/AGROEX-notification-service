@@ -4,6 +4,7 @@ import com.ventionteams.agroexp_notification_service.model.UserConnection;
 import com.ventionteams.agroexp_notification_service.model.SSESubscription;
 import com.ventionteams.agroexp_notification_service.service.SSEService;
 import com.ventionteams.agroexp_notification_service.service.UserConnectionService;
+import com.ventionteams.agroexp_notification_service.util.AuthUtil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -26,25 +27,29 @@ import java.util.UUID;
 public class SSEController {
   private final UserConnectionService userConnectionService;
 
-  @GetMapping(path = "/connect/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public Flux<ServerSentEvent> openSseStream(@PathVariable UUID userId) {
+  @GetMapping(path = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+  public Flux<ServerSentEvent> openSseStream() {
     var subscriptions = SSEService.getSubscriptions();
     var connectionId = UUID.randomUUID();
-    return Flux.create(
-        fluxSink -> {
-          fluxSink.onCancel(
-              () -> {
-                subscriptions.remove(connectionId);
-                userConnectionService.deleteById(connectionId);
-                log.info("Subscription for user with id {} was closed", userId);
-              });
-          var successfullyConnectedEvent =
-              ServerSentEvent.builder("Connected successfully").build();
-          fluxSink.next(successfullyConnectedEvent);
-          subscriptions.put(connectionId, new SSESubscription(userId, fluxSink));
-          userConnectionService.save(new UserConnection(connectionId, userId));
+    return AuthUtil.getAuthenticatedUserId()
+        .flatMapMany(
+            userId -> {
+              return Flux.create(
+                  fluxSink -> {
+                    fluxSink.onCancel(
+                        () -> {
+                          subscriptions.remove(connectionId);
+                          userConnectionService.deleteById(connectionId);
+                          log.info("Subscription for user with id {} was closed", userId);
+                        });
+                    var successfullyConnectedEvent =
+                        ServerSentEvent.builder("Connected successfully").build();
+                    fluxSink.next(successfullyConnectedEvent);
+                    subscriptions.put(connectionId, new SSESubscription(userId, fluxSink));
+                    userConnectionService.save(new UserConnection(connectionId, userId));
 
-          log.info("Created subscription for user with id: {}",userId);
-        });
+                    log.info("Created subscription for user with id: {}", userId);
+                  });
+            });
   }
 }

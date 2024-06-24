@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ventionteams.agroexp_notification_service.controller.SSEController;
 import com.ventionteams.agroexp_notification_service.model.NotificationPayload;
 import com.ventionteams.agroexp_notification_service.service.SSEService;
+import com.ventionteams.agroexp_notification_service.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -30,7 +31,7 @@ public class MessageSubscriber implements MessageListener {
           .filter(sseSubscription -> sseSubscription.getUserId().equals(userId))
           .forEach(sseSubscription -> sseService.send(payload));
     } catch (IOException e) {
-      log.error("Unable to process message: {}", String.valueOf(e));
+      log.error(e.getMessage());
     }
   }
 }
