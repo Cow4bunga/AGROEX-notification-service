@@ -1,0 +1,41 @@
+spring:
+  redis:
+    topic: ${TOPIC_NAME}
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      repositories:
+        enabled: true
+  config:
+    import: optional:file:.env[.properties]
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+  cloud:
+    aws:
+      sqs:
+        name: ${QUEUE_NAME}
+        arn: ${SNS_TOPIC_ARN}
+        region: ${AWS_REGION}
+      cognito:
+        userPoolId: us-east-1_tRUXbAWUb
+        region: us-east-1
+server:
+  port: 8081
+cors:
+  origins: http://localhost:3000, http://localhost:5731
